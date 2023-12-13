@@ -1,0 +1,118 @@
+---
+title: "Linear vs. GP vs. DGP"
+author: "Gabrielle Walczak"
+date: "2023-12-13"
+output: html_document
+---
+
+```{r}
+library(deepgp) # load deepgp package
+
+
+# Simulating data
+set.seed(123456)
+
+k <- 100
+
+# creating a zero vector for x
+x <- rep(0, k)
+
+# creating a zero vector for the error term
+epsilon <- rnorm(k, mean = 0, sd = 0.1)
+
+for (i in 1:k) {
+  x[i] <- i/k
+}
+
+# define the response
+y <- (x-0.5)^2 + epsilon
+
+# scale the response term to work with the deepgp package
+y.scaled <- scale(y)
+```
+
+
+
+### Simple Linear Regression
+
+```{r}
+plot(x,y.scaled, main = "Simulated Data", xlab = "Genotype", ylab = "Quantitative Trait")
+
+linmod <- lm(y.scaled~x)
+b0 <- linmod$coef[1]
+b1 <- linmod$coef[2]
+
+abline(a = b0, b = b1, col = "red")
+```
+
+```{r}
+summary(linmod)
+```
+
+
+
+
+### Traditional One-layer Gaussian Process
+
+```{r}
+# Plot
+plot(x,y.scaled, main = "Simulated Data", xlab = "Genotype", ylab = "Quantitative Trait")
+
+fit1 <- fit_one_layer(x, c(y.scaled), nmcmc = 100, verb = TRUE)
+muhat1 <- predict(fit1, x, lite = FALSE) # E[f|y]
+
+lines(x, muhat1$mean)
+
+xnew <- x + 1/k # perturbed vector
+muhatnew <- predict(fit1, xnew, lite = FALSE) # E[g|y]
+lines(x, muhatnew$mean, col = "blue")
+
+lines(x, muhatnew$mean + sqrt(diag(muhatnew$Sigma))*qnorm(0.975), col = "blue", lty = 2)
+lines(x, muhatnew$mean - sqrt(diag(muhatnew$Sigma))*qnorm(0.975), col = "blue", lty = 2)
+
+delta1 <- muhat1$mean - muhatnew$mean # GOALS operator
+```
+
+```{r}
+plot(fit1) # Kernel hyperparameters are sampled through Metropolis Hastings
+```
+
+
+```{r}
+plot(density(delta1))
+mean(delta1)
+text(-0.10,6,'Global score = -0.0005')
+```
+
+### Two-layer Deep Gaussian Process
+
+```{r}
+plot(x,y.scaled, main = "Simulated Data", xlab = "Genotype", ylab = "Quantitative Trait")
+
+fit2 <- fit_two_layer(x, c(y.scaled), nmcmc = 100, verb = TRUE)
+
+muhat1 <- predict(fit2, x, lite = FALSE) # E[f|y]
+
+lines(x, muhat1$mean)
+
+xnew <- x + 1/k # perturbed vector
+muhatnew <- predict(fit2, xnew, lite = FALSE) # E[g|y]
+lines(x, muhatnew$mean, col = "blue")
+
+lines(x, muhatnew$mean + sqrt(diag(muhatnew$Sigma))*qnorm(0.975), col = "blue", lty = 2)
+lines(x, muhatnew$mean - sqrt(diag(muhatnew$Sigma))*qnorm(0.975), col = "blue", lty = 2)
+
+delta2 <- muhat1$mean - muhatnew$mean
+```
+
+```{r}
+plot(fit2) # Kernel hyperparameters are sampled through Metropolis Hastings
+# In higher dimensions, there will be trace plots for each theta_w[i]
+```
+
+```{r}
+plot(density(delta2))
+mean(delta2)
+
+text(-0.10,6,'Global score = -0.0007')
+```
