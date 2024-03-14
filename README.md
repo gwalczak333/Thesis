@@ -18,6 +18,11 @@ In this paper, in addition to fitting a larger dataset using traditional linear 
 
 Booth, A. S. (2023). deepgp: an R-package for Bayesian Deep Gaussian Processes.
 
+Bryan A. Hanson, D. T. H. (2022). LearnPCA: Functions, Data Sets and Vignettes to Aid
+in Learning Principal Components Analysis (PCA).
+
+Gustavo de los Campos, P. P. R. (2023). BGLR: Bayesian Generalized Linear Regression.
+
 Valdar, W., L. C. Solberg, D. Gauguier, S. Burnett, P. Klenerman, W. O. Cookson, M. S.
 Taylor, J. N. Rawlins, R. Mott, and J. Flint (2006). Genome-wide genetic association of
 complex traits in heterogeneous stock mice. Nature Genetics 38 (8), 879–887.
