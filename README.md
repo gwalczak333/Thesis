@@ -8,7 +8,9 @@ In this paper, in addition to fitting a larger dataset using traditional linear 
 
 ## R-package for GOALS
 [deepgp](https://cran.r-project.org/web/packages/deepgp/vignettes/deepgp.html)
+
 [BGLR](https://cran.r-project.org/package=BGLR)
+
 [LearnPCA](https://cran.r-project.org/package=LearnPCA)
 
 
