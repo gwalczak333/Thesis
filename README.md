@@ -13,6 +13,12 @@ In this paper, in addition to fitting a larger dataset using traditional linear 
 
 [LearnPCA](https://cran.r-project.org/package=LearnPCA)
 
+[ggplot2](https://cran.r-project.org/package=ggplot2)
+
+[dplyr](https://cran.r-project.org/package=dplyr)
+
+[fields](https://cran.r-project.org/package=fields)
+
 
 ## Relevent Citations
 
