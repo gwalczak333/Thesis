@@ -3,7 +3,7 @@
 In statistical genetics, one may want to understand how a genetic variant affects a complex trait along with how the variant could disproportionately affect individuals from different subpopulations, and this can be achieved using the ”GlObal And Local Score” (GOALS) operator, which provides a way to assess local and global variable importance simultaneously in nonlinear models (Winn-Nu ̃nez et al.,2023).
 
 In this paper, in addition to fitting a larger dataset using traditional linear models, a nonlinear, non-parametric Bayesian approach called Gaussian process (GP) regression will be utilized to implement the GOALS operator. To expand on this, I will use deep Gaussian process regression (DGP), which is essentially a multi-layer Gaussian process that can be implemented via Markov Chain Monte Carlo (Booth, 2023). Using a large dataset relating gene expression measurements to observed traits in a population of mice (Valdar et al.,
-2006), I will apply linear regression, Gaussian process regression, and deep Gaussian process regression. To compare the models, I will evaluate predicted values against the true values at the testing locations (Booth, 2023). 
+2006), I will use Gaussian process regression and deep Gaussian process regression to implement the GOALS operator. To compare the models, I will evaluate predicted values against the true values at the testing locations (Booth, 2023). 
 
 
 ## R-package for GOALS
